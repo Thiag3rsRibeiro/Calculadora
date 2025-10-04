@@ -6,11 +6,13 @@ class Calculadora {
         this.num1 = null;
         this.num2 = null;
         this.operador = null;
+        this.res=null;
         this.Mouse();
         this.Teclado();
         this.Operadores();
         this.Limpar();
         this.Delete();
+        this.atuaTela();
     }
     Mouse() {
         this.btn.forEach((elemento) => {
@@ -34,10 +36,16 @@ class Calculadora {
         })
 
     }
+
+    atuaTela() {
+        this.telaAnterior.innerHTML = ""
+        this.tela.innerHTML = this.res
+    }
+
     Numeros(elemento) {
-        let bt = ['1', '2', '3', '4', '5', '6', '7', '8', '9','0',',','.']
+        let bt = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '.']
         if (bt.includes(elemento)) {
-            this.tela.innerHTML += elemento;   
+            this.tela.innerHTML += elemento;
         }
     }
     Operadores(elemento) {
@@ -50,12 +58,28 @@ class Calculadora {
         }
     }
     Calcular(elemento) {
-        let res;
-        if (elemento === "=" || elemento==="Enter") {
+        if (elemento === "=" || elemento === "Enter") 
+        {
             this.num2 = this.tela.innerHTML
-            res = this.num1 + this.operador + this.num2
-            this.telaAnterior.innerHTML = ""
-            this.tela.innerHTML = eval(res)
+            switch (this.operador) 
+            {
+                case '+':
+                    this.res = parseFloat(this.num1) + parseFloat(this.num2)
+                    this.atuaTela()
+                    break;
+                case '-':
+                    this.res = parseFloat(this.num1) - parseFloat(this.num2)
+                    this.atuaTela() 
+                    break; 
+                case '*':
+                    this.res = parseFloat(this.num1) * parseFloat(this.num2)
+                    this.atuaTela()
+                    break;
+                case '/':
+                    this.res = parseFloat(this.num1) / parseFloat(this.num2)
+                    this.atuaTela() 
+                    break;     
+            }
         }
     }
     Limpar(elemento) {
@@ -65,13 +89,13 @@ class Calculadora {
             this.num1 = null;
             this.num2 = null;
             this.operador = null;
-            
+
         }
     }
     Delete(elemento) {
         if (elemento === "<=" || elemento === "Backspace") {
             console.log(elemento)
-            this.tela.innerHTML=this.tela.innerHTML.slice(0, -1)
+            this.tela.innerHTML = this.tela.innerHTML.slice(0, -1)
         }
     }
 
